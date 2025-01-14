@@ -1,7 +1,7 @@
 # Blackjack Web Application
 
 ## Overview
-This is a simple web application that allows users to play a game of Blackjack directly in their browser. The game implements core Blackjack rules, including hitting, standing, and determining winners based on card values.
+This is a simple web application that allows users to play a game of Blackjack directly in their browser. The game implements core Blackjack rules, including hitting, standing, and determining winners based on card values. Games is also a simple project made for uni purposes and nothing else or more.
 
 ## Features
 - Fully playable Blackjack game.
