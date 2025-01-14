@@ -50,7 +50,6 @@ project-root/
 ## Possible future Enhancements
 - Add betting functionality.
 - Add option to choose different deck designs.
-- Implement multiple-player support.
 - Add animations for card dealing.
 - Include sound effects for game actions.
 
