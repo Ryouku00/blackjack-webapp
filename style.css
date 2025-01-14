@@ -1,0 +1,73 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0f4c75;
+    color: #bbe1fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#game-container {
+    text-align: center;
+    background: #1b262c;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 600px;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+#game-board {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+#dealer, #player {
+    width: 45%;
+    text-align: center;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.card {
+    width: 80px;
+    height: auto;
+    margin: 0 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#controls button {
+    background-color: #3282b8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+#controls button:hover {
+    background-color: #bbe1fa;
+    color: #1b262c;
+}
+
+#message {
+    font-size: 1.2em;
+    margin-top: 20px;
+}
