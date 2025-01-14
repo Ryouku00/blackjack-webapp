@@ -47,8 +47,9 @@ project-root/
 - Styling: Modify `style.css` to change the appearance of the application.
 - Game logic: Update `script.js` for additional rules or gameplay tweaks.
 
-## Future Enhancements
+## Possible future Enhancements
 - Add betting functionality.
+- Add option to choose different deck designs.
 - Implement multiple-player support.
 - Add animations for card dealing.
 - Include sound effects for game actions.
