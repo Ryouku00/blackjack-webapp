@@ -5,31 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack Game</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #rules-popup.hidden {
+            display: none;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div id="game-container">
         <header>
-            <h1>Blackjack Game</h1>
+            <h1>Blackjack</h1>
         </header>
         <div id="game-board">
             <div id="dealer">
                 <h2>Dealer</h2>
                 <div id="dealer-cards" class="cards"></div>
-                <p id="dealer-score">Score: 0</p>
+                <div id="dealer-score">Score: 0</div>
             </div>
             <div id="player">
                 <h2>Player</h2>
                 <div id="player-cards" class="cards"></div>
-                <p id="player-score">Score: 0</p>
+                <div id="player-score">Score: 0</div>
             </div>
         </div>
         <div id="controls">
             <button id="hit-button">Hit</button>
             <button id="stand-button">Stand</button>
             <button id="restart-button">Restart</button>
+            <button id="rules-button">Rules</button>
         </div>
-        <p id="message"></p>
+        <div id="message"></div>
     </div>
-    <script src="script.js"></script>
+
+    <div id="overlay"></div>
+
+    <!-- Rules Popup -->
+    <div id="rules-popup" class="popup hidden">
+        <div class="popup-content">
+            <span id="close-popup" class="close">&times;</span>
+            <h2>Blackjack Rules</h2>
+            <p><strong>Objective:</strong> Beat the dealer by having a hand value closest to 21 without exceeding it.</p>
+            <p><strong>Card Values:</strong></p>
+            <ul>
+                <li>Number cards are worth their face value.</li>
+                <li>Face cards (J, Q, K) are worth 10.</li>
+                <li>Aces are worth 1 or 11, whichever is more advantageous for the hand.</li>
+            </ul>
+            <p><strong>Gameplay:</strong></p>
+            <ul>
+                <li>The dealer must stand on 17 or higher and draw on 16 or lower.</li>
+                <li>You can "Hit" to draw more cards or "Stand" to keep your current hand.</li>
+                <li>If your hand exceeds 21, you "bust" and lose automatically.</li>
+            </ul>
+            <p>Good luck and have fun!</p>
+        </div>
+    </div>
+
+    <script>
+        const rulesButton = document.getElementById('rules-button');
+        const rulesPopup = document.getElementById('rules-popup');
+        const closePopup = document.getElementById('close-popup');
+        const overlay = document.getElementById('overlay');
+
+        rulesButton.addEventListener('click', () => {
+            rulesPopup.classList.remove('hidden');
+            overlay.style.display = 'block';
+        });
+
+        closePopup.addEventListener('click', () => {
+            rulesPopup.classList.add('hidden');
+            overlay.style.display = 'none';
+        });
+
+        overlay.addEventListener('click', () => {
+            rulesPopup.classList.add('hidden');
+            overlay.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
+
