@@ -5,58 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack Game</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .hidden {
-            display: none;
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-        }
-
-        .popup-content {
-            position: relative;
-        }
-
-        .close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        #rules-popup.hidden {
-            display: none;
-        }
-
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-
-        .card {
-            width: 80px;
-            height: auto;
-            margin: 5px;
-        }
-    </style>
 </head>
 <body>
     <div id="game-container">
@@ -69,6 +17,9 @@
                 <div id="dealer-cards" class="cards"></div>
                 <div id="dealer-score">Score: 0</div>
             </div>
+            <div id="deck" class="cards">
+                <img src="assets/cards/reverse_card.png" alt="Deck" class="card">
+            </div> <!-- deck for adding cards -->
             <div id="player">
                 <h2>Player</h2>
                 <div id="player-cards" class="cards"></div>
@@ -84,7 +35,7 @@
         <div id="message"></div>
     </div>
 
-    <div id="overlay"></div>
+    <div id="overlay" class="hidden"></div>
 
     <!-- Rules Popup -->
     <div id="rules-popup" class="popup hidden">
@@ -108,158 +59,6 @@
         </div>
     </div>
 
-    <script>
-        // Basic Game Functionality
-        let playerHand = [];
-        let dealerHand = [];
-        let deck = [];
-
-        const hitButton = document.getElementById('hit-button');
-        const standButton = document.getElementById('stand-button');
-        const restartButton = document.getElementById('restart-button');
-        const playerCardsDiv = document.getElementById('player-cards');
-        const dealerCardsDiv = document.getElementById('dealer-cards');
-        const playerScoreDiv = document.getElementById('player-score');
-        const dealerScoreDiv = document.getElementById('dealer-score');
-        const messageDiv = document.getElementById('message');
-
-        function initializeDeck() {
-            const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
-            const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-            deck = [];
-
-            for (let suit of suits) {
-                for (let value of values) {
-                    deck.push({ value, suit });
-                }
-            }
-
-            deck = deck.sort(() => Math.random() - 0.5);
-        }
-
-        function getCardValue(card) {
-            if (['J', 'Q', 'K'].includes(card.value)) {
-                return 10;
-            } else if (card.value === 'A') {
-                return 11;
-            } else {
-                return parseInt(card.value);
-            }
-        }
-
-        function calculateHandValue(hand) {
-            let value = hand.reduce((sum, card) => sum + getCardValue(card), 0);
-            let aces = hand.filter(card => card.value === 'A').length;
-
-            while (value > 21 && aces > 0) {
-                value -= 10;
-                aces--;
-            }
-
-            return value;
-        }
-
-        function renderHand(hand, container) {
-            container.innerHTML = '';
-            hand.forEach(card => {
-                const cardImg = document.createElement('img');
-                cardImg.src = `assets/cards/${card.value}_of_${card.suit}.png`;
-                cardImg.classList.add('card');
-                container.appendChild(cardImg);
-            });
-        }
-
-        function updateScores() {
-            const playerScore = calculateHandValue(playerHand);
-            const dealerScore = calculateHandValue(dealerHand);
-            playerScoreDiv.textContent = `Score: ${playerScore}`;
-            dealerScoreDiv.textContent = `Score: ${dealerScore}`;
-        }
-
-        function checkGameState() {
-            const playerScore = calculateHandValue(playerHand);
-            const dealerScore = calculateHandValue(dealerHand);
-
-            if (playerScore > 21) {
-                messageDiv.textContent = 'You bust! Dealer wins.';
-                endGame();
-            } else if (dealerScore > 21) {
-                messageDiv.textContent = 'Dealer busts! You win!';
-                endGame();
-            } else if (dealerScore >= 17 && playerScore <= 21) {
-                if (dealerScore > playerScore) {
-                    messageDiv.textContent = 'Dealer wins!';
-                } else if (dealerScore < playerScore) {
-                    messageDiv.textContent = 'You win!';
-                } else {
-                    messageDiv.textContent = 'It\'s a tie!';
-                }
-                endGame();
-            }
-        }
-
-        function dealerTurn() {
-            while (calculateHandValue(dealerHand) < 17) {
-                dealerHand.push(deck.pop());
-            }
-            renderHand(dealerHand, dealerCardsDiv);
-            updateScores();
-            checkGameState();
-        }
-
-        function endGame() {
-            hitButton.disabled = true;
-            standButton.disabled = true;
-        }
-
-        function resetGame() {
-            initializeDeck();
-            playerHand = [deck.pop(), deck.pop()];
-            dealerHand = [deck.pop()];
-            renderHand(playerHand, playerCardsDiv);
-            renderHand(dealerHand, dealerCardsDiv);
-            updateScores();
-            messageDiv.textContent = '';
-            hitButton.disabled = false;
-            standButton.disabled = false;
-        }
-
-        hitButton.addEventListener('click', () => {
-            playerHand.push(deck.pop());
-            renderHand(playerHand, playerCardsDiv);
-            updateScores();
-            checkGameState();
-        });
-
-        standButton.addEventListener('click', () => {
-            dealerTurn();
-        });
-
-        restartButton.addEventListener('click', resetGame);
-
-        resetGame();
-
-        // Rules Popup Functionality
-        const rulesButton = document.getElementById('rules-button');
-        const rulesPopup = document.getElementById('rules-popup');
-        const closePopup = document.getElementById('close-popup');
-        const overlay = document.getElementById('overlay');
-
-        rulesButton.addEventListener('click', () => {
-            rulesPopup.classList.remove('hidden');
-            overlay.style.display = 'block';
-        });
-
-        closePopup.addEventListener('click', () => {
-            rulesPopup.classList.add('hidden');
-            overlay.style.display = 'none';
-        });
-
-        overlay.addEventListener('click', () => {
-            rulesPopup.classList.add('hidden');
-            overlay.style.display = 'none';
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
