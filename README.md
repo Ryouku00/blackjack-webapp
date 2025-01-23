@@ -46,7 +46,8 @@ project-root/
 - Card images: Replace or add card images in the `assets/cards/` folder. Ensure filenames match the required format.
 - Styling: Modify `style.css` to change the appearance of the application.
 - Game logic: Update `script.js` for additional rules or gameplay tweaks.
-
+- Added a second deck of cards in pixel art style inspired by Undertale. You can easily change between deck simply by changing the name of the folder with cards you want to use to "cards".
+- 
 ## Possible future Enhancements
 - Add betting functionality.
 - Add option to choose different deck designs.
