@@ -58,7 +58,6 @@ project-root/
 ## Controls
 - 🎯 **Hit**: Draw an additional card.
 - ✋ **Stand**: End your turn and let the dealer play.
-- 🃏 **Split**: If you have two matching cards, you can split into two hands.
 - 🔄 **Restart**: Reset the game and start over.
 - 💰 **Bet**: Enter an amount and place a bet before starting a new round.
 - 🎴 **Change Card Back**: Select a custom card back from the settings.
