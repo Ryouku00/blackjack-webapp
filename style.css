@@ -1,7 +1,13 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #222;
-    color: #bbe1fa;
+    background: #1D1D1D url('assets/images/background3.jpg') no-repeat center center;
+    background-size: cover;
+    color: #E6FBA2;
+    text-shadow:
+        -2px -2px 0 black,
+         2px -2px 0 black,
+        -2px  2px 0 black,
+         2px  2px 0 black;
     margin: 0;
     padding: 0;
     display: flex;
@@ -11,14 +17,32 @@ body {
 }
 
 #game-container {
+    position: relative;
     text-align: center;
-    background: #006200;
-    border-radius: 10px;
+    background: #1A441A url('assets/images/table2.jpg') no-repeat center center;
+    background-size: cover; 
+    border-radius: 15px;
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     width: 90%;
     max-width: 1200px;
 }
+
+#game-container::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: rgba(0, 0, 0, 0.3); 
+    border: 5px solid #FFD700; 
+    border-radius: 20px; 
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); 
+    pointer-events: none; 
+}
+
+
 
 header h1 {
     font-size: 2em;
@@ -29,6 +53,7 @@ header h1 {
     display: flex;
     justify-content: space-between;
     margin: 20px 0;
+    position: relative;
 }
 
 #dealer, #player {
@@ -50,14 +75,16 @@ header h1 {
     width: 120px;
     height: 160px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 .cards {
     display: flex;
     justify-content: center;
     margin: 10px 0;
+    position: relative;
 }
 
 .card {
@@ -66,6 +93,7 @@ header h1 {
     margin: 0 5px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 #controls button {
@@ -118,6 +146,8 @@ header h1 {
     display: none;
 }
 
+
+/* Popup dla zasad */
 .popup {
     position: fixed;
     top: 50%;
@@ -125,27 +155,76 @@ header h1 {
     transform: translate(-50%, -50%);
     background: #fff;
     color: #000;
-    padding: 20px;
+    padding: 30px;  
     border-radius: 10px;
-    width: 60%;
-    max-width: 600px;
+    width: 80%; 
+    max-width: 700px; 
     z-index: 1000;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    text-shadow: none; 
+    overflow-y: auto; 
+    max-height: 80vh; 
 }
 
 .popup h2 {
     margin-top: 0;
+    text-shadow: none; 
 }
 
 .popup-content {
-    max-height: 400px;
-    overflow-y: auto;
+    overflow-y: auto; 
 }
 
+/* Styl przycisku zamknięcia */
 .close {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 1.5em;
     cursor: pointer;
+}
+
+
+
+
+/* Popup dla wyboru rewersu kart */
+.popup-content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-gap: 10px; 
+    justify-items: center; 
+    margin-top: 10px;
+}
+
+/* Zmniejszenie wielkości kart w popupie oraz dodanie ramek */
+.popup-content .skin-option {
+    width: 100%; 
+    padding: 10px; 
+    box-sizing: border-box; 
+    border: 2px solid #ccc; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Styl dla obrazków wewnątrz */
+.popup-content .skin-option img {
+    width: 100%; 
+    height: auto; 
+    display: block; 
+    border-radius: 5px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+}
+
+/* Animacja powiększenia karty przy najechaniu */
+.popup-content .skin-option:hover {
+    transform: scale(1.1);
+}
+
+
+
+
+/* Ukrycie popupu */
+.hidden {
+    display: none;
 }
