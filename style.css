@@ -35,7 +35,7 @@ body {
     left: -10px;
     right: -10px;
     bottom: -10px;
-    background: rgba(0, 0, 0, 0.3); 
+    background: rgba(0, 0, 0, 0.1); 
     border: 5px solid #FFD700; 
     border-radius: 20px; 
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.7); 
