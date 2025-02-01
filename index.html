@@ -1,64 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blackjack Game</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blackjack Game</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="game-container">
-        <header>
-            <h1>Blackjack</h1>
-        </header>
-        <div id="game-board">
-            <div id="dealer">
-                <h2>Dealer</h2>
-                <div id="dealer-cards" class="cards"></div>
-                <div id="dealer-score">Score: 0</div>
-            </div>
-            <div id="deck" class="cards">
-                <img src="assets/cards/reverse_card.png" alt="Deck" class="card">
-            </div> <!-- deck for adding cards -->
-            <div id="player">
-                <h2>Player</h2>
-                <div id="player-cards" class="cards"></div>
-                <div id="player-score">Score: 0</div>
-            </div>
-        </div>
-        <div id="controls">
-            <button id="hit-button">Hit</button>
-            <button id="stand-button">Stand</button>
-            <button id="restart-button">Restart</button>
-            <button id="rules-button">Rules</button>
-        </div>
-        <div id="message"></div>
+  <div id="game-container">
+    <header>
+      <h1>Blackjack</h1>
+    </header>
+    <div id="game-board">
+      <div id="dealer">
+        <h2>Dealer</h2>
+        <div id="dealer-cards" class="cards"></div>
+        <div id="dealer-score">Score: 0</div>
+      </div>
+      <div id="deck" class="cards">
+        <!-- Default card back – can be changed via the Skin selection -->
+        <img src="assets/cards/reverse_card_v3.png" alt="Deck" class="card" />
+      </div>
+      <div id="player">
+        <h2>Player</h2>
+        <div id="player-cards" class="cards"></div>
+        <div id="player-score">Score: 0</div>
+      </div>
     </div>
 
-    <div id="overlay" class="hidden"></div>
-
-    <!-- Rules Popup -->
-    <div id="rules-popup" class="popup hidden">
-        <div class="popup-content">
-            <span id="close-popup" class="close">&times;</span>
-            <h2>Blackjack Rules</h2>
-            <p><strong>Objective:</strong> Beat the dealer by having a hand value closest to 21 without exceeding it.</p>
-            <p><strong>Card Values:</strong></p>
-            <ul>
-                <li>Number cards are worth their face value.</li>
-                <li>Face cards (J, Q, K) are worth 10.</li>
-                <li>Aces are worth 1 or 11, whichever is more advantageous for the hand.</li>
-            </ul>
-            <p><strong>Gameplay:</strong></p>
-            <ul>
-                <li>The dealer must stand on 17 or higher and draw on 16 or lower.</li>
-                <li>You can "Hit" to draw more cards or "Stand" to keep your current hand.</li>
-                <li>If your hand exceeds 21, you "bust" and lose automatically.</li>
-            </ul>
-            <p>Good luck and have fun!</p>
-        </div>
+    <!-- Betting panel -->
+    <div id="betting">
+      <label for="bet-input">Bet Amount:</label>
+      <input type="number" id="bet-input" min="1" value="100" />
+      <button id="place-bet-button">Place Bet</button>
     </div>
+    <!-- Display tokens -->
+    <div id="tokens-display">Tokens: 1000</div>
 
-    <script src="script.js"></script>
+    <div id="controls">
+      <button id="hit-button">Hit</button>
+      <button id="stand-button">Stand</button>
+      <!-- Split button – only visible when available -->
+      <button id="split-button" style="display: none;">Split</button>
+      <button id="restart-button">Restart</button>
+      <button id="rules-button">Rules</button>
+      <button id="skin-button">Skin</button>
+      <!-- Button to start the next round -->
+      <button id="next-round-button" style="display: none;">Next Round</button>
+      <!-- Button to analyze strategy -->
+      <button id="analyze-button">Analyze Strategy</button>
+    </div>
+    <div id="message"></div>
+  </div>
+
+  <div id="overlay" class="hidden"></div>
+
+  <!-- Rules Popup -->
+  <div id="rules-popup" class="popup hidden">
+    <div class="popup-content">
+      <span id="close-popup" class="close">&times;</span>
+      <h2>Blackjack Rules</h2>
+      <p><strong>Objective:</strong> Beat the dealer by having a hand value closest to 21 without going over.</p>
+      <h3>Card Values</h3>
+      <ul>
+        <li>Number cards: Face value.</li>
+        <li>Face cards (J, Q, K): 10 points each.</li>
+        <li>Ace (A): 1 or 11 points, whichever benefits your hand the most.</li>
+      </ul>
+      <h3>Gameplay</h3>
+      <ul>
+        <li>The dealer must stand on 17 or higher and hit on 16 or lower.</li>
+        <li>You may choose to "Hit" to draw an additional card or "Stand" to keep your current hand.</li>
+        <li>If your hand exceeds 21, you bust and lose the round.</li>
+      </ul>
+      <p><em>Good luck and have fun!</em></p>
+    </div>
+  </div>
+
+  <!-- Skin Popup for selecting card backs -->
+  <div id="skin-popup" class="popup hidden">
+    <h2>Select Card Back</h2>
+    <div id="skin-options" class="popup-content">
+      <!-- Card back options -->
+      <div class="skin-option" data-skin="reverse1.png">
+        <img src="assets/reverse_cards/reverse1.png" alt="Skin 1" />
+      </div>
+      <div class="skin-option" data-skin="reverse2.png">
+        <img src="assets/reverse_cards/reverse2.png" alt="Skin 2" />
+      </div>
+      <div class="skin-option" data-skin="reverse3.png">
+        <img src="assets/reverse_cards/reverse3.png" alt="Skin 3" />
+      </div>
+      <div class="skin-option" data-skin="reverse4.png">
+        <img src="assets/reverse_cards/reverse4.png" alt="Skin 4" />
+      </div>
+      <div class="skin-option" data-skin="reverse5.png">
+        <img src="assets/reverse_cards/reverse5.png" alt="Skin 5" />
+      </div>
+      <div class="skin-option" data-skin="reverse6.png">
+        <img src="assets/reverse_cards/reverse6.png" alt="Skin 6" />
+      </div>
+      <div class="skin-option" data-skin="reverse7.png">
+        <img src="assets/reverse_cards/reverse7.png" alt="Skin 7" />
+      </div>
+      <div class="skin-option" data-skin="reverse8.png">
+        <img src="assets/reverse_cards/reverse8.png" alt="Skin 8" />
+      </div>
+      <div class="skin-option" data-skin="reverse9.png">
+        <img src="assets/reverse_cards/reverse9.png" alt="Skin 9" />
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
